@@ -4,11 +4,11 @@ Hi, My name is Zejian Zhang. I am a graduate student majoring Computer Science a
 
 Links:
 
-Web app on Heroku
+Web app on Heroku:
 https://zhang-zejian-webdev.herokuapp.com/
 
-Project
-https://github.com/zejet/
+Project:
+https://zhang-zejian-webdev.herokuapp.com/project/index.html
 
-Assignments
-https://github.com/zejet/
+Assignments:
+https://zhang-zejian-webdev.herokuapp.com/assignment/
