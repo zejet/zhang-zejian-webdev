@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40283a5a-26a5-40ab-9550-0fa10ddabd6c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/page-edit.html" afterPath="$PROJECT_DIR$/public/assignment/page-edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/page-list.html" afterPath="$PROJECT_DIR$/public/assignment/page-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/page-new.html" afterPath="$PROJECT_DIR$/public/assignment/page-new.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/website-edit.html" afterPath="$PROJECT_DIR$/public/assignment/website-edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/website-list.html" afterPath="$PROJECT_DIR$/public/assignment/website-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/website-new.html" afterPath="$PROJECT_DIR$/public/assignment/website-new.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/widget-heading.html" afterPath="$PROJECT_DIR$/public/assignment/widget-heading.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/widget-image.html" afterPath="$PROJECT_DIR$/public/assignment/widget-image.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/widget-list.html" afterPath="$PROJECT_DIR$/public/assignment/widget-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/widget-youtube.html" afterPath="$PROJECT_DIR$/public/assignment/widget-youtube.html" />
-    </list>
+    <list default="true" id="40283a5a-26a5-40ab-9550-0fa10ddabd6c" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -423,12 +412,12 @@
       <updated>1499895427964</updated>
       <workItem from="1499895430679" duration="4482000" />
       <workItem from="1500328851937" duration="806000" />
-      <workItem from="1500404239718" duration="18925000" />
+      <workItem from="1500404239718" duration="19041000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24213000" />
+    <option name="totallyTimeSpent" value="24329000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
