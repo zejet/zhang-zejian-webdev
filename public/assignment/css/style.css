@@ -1,0 +1,83 @@
+input {
+    margin-bottom: 10px;
+}
+
+textarea {
+    margin-bottom: 10px;
+}
+
+select {
+    margin-bottom: 10px;
+}
+
+.navbar-default {
+    background-color: steelblue;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.padding-body {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.split-view-left {
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    z-index: 1;
+    overflow-y: scroll;
+}
+
+@media (min-width: 1200px) {
+    .col-lg-9.split-view-right {
+        width: 75%;
+        position: absolute;
+        right: 0px;
+        overflow-y: scroll;
+        top: 60px;
+        bottom: 0px;
+    }
+}
+
+.col-lg-9.split-nav-right {
+    width: 75%;
+}
+
+.nav-split-left {
+    padding-right: 20px;
+}
+
+.glyphicon-place-holder:before {
+    content: "\2122";
+    color: transparent !important;
+}
+
+.no-style-list {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.ul-list-item {
+    margin-bottom: 10px;
+}
+
+.wd-widget > img {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.wd-widget {
+    margin-bottom: 10px;
+}
+
+.wd-widget > .widget-toolbar {
+    position: absolute;
+    right: 15px;
+    background: white;
+    opacity: 0.5;
+    border-bottom-left-radius: 5px;
+    padding: 5px;
+}
