@@ -15,11 +15,11 @@
 
         init();
 
-        function create(userId, name, description) {
+        function create() {
             var website = [];
-            website.name = name;
-            website.description = description;
-            WebsiteService.createWebsite(userId, website);
+            website.name = model.name;
+            website.description = model.description;
+            WebsiteService.createWebsite(model.userId, website);
             $location.url("user/"+model.userId+"/website");
         }
     }

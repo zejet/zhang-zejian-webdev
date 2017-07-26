@@ -26,6 +26,7 @@
 
         function unregister(user) {
             userService.deleteUser(user._id);
+            model.unregistered = "Successfully Unregistered!";
             $location.url("/");
         }
     }

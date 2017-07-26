@@ -28,6 +28,10 @@
             {{model.update}}
         </div>
 
+        <div ng-show="model.unregistered" class="alert alert-danger">
+            {{model.unregistered}}
+        </div>
+
         <label for=username>Username</label>
         <input name="username"
                ng-model=model.user.username
