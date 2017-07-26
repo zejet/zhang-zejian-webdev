@@ -1,1 +1,36 @@
-<h1>Assignment</h1>
+<!DOCTYPE html>
+<html lang="en" ng-app="WebAppMaker">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../vendor/angular/angular.js"></script>
+    <script src="../vendor/angular/angular-route.js"></script>
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <script src="views/user/controllers/login.controller.client.js"></script>
+    <script src="views/user/controllers/profile.controller.client.js"></script>
+    <script src="views/user/controllers/register.controller.client.js"></script>
+    <script src="views/website/controllers/website-new.view.client.js"></script>
+    <script src="views/website/controllers/website-edit.view.client.js"></script>
+    <script src="views/website/controllers/website-list.view.client.js"></script>
+    <script src="views/page/controllers/page-edit.view.client.js"></script>
+    <script src="views/page/controllers/page-list.view.client.js"></script>
+    <script src="views/page/controllers/page-new.view.client.js"></script>
+    <script src="views/widget/controllers/widget-edit.view.client.js"></script>
+    <script src="views/widget/controllers/widget-list.view.client.js"></script>
+    <script src="views/widget/controllers/widget-new.view.client.js"></script>
+    <script src="services/user.service.client.js"></script>
+    <script src="services/website.service.client.js"></script>
+    <script src="services/page.service.client.js"></script>
+    <script src="services/widget.service.client.js"></script>
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div ng-view></div>
+</body>
+</html>

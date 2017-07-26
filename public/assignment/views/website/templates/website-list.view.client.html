@@ -1,0 +1,46 @@
+<div class="padding-body">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand"
+                   href="#!/user/{{model.userId}}">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+                <a class="navbar-brand" href="#!/user/{{model.userId}}/website">
+                    Websites
+                </a>
+
+                <a class="visible-xs navbar-brand nav-right pull-right"
+                   href="#!/user/{{model.userId}}/website/new">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>
+                </a>
+            </div>
+
+            <div class="hidden-xs nav-header collapse navbar-collapse">
+                <a class="nav navbar-brand nav-right pull-right"
+                   href="#!/user/{{model.userId}}/website/new">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Start of body content -->
+    <div class="container-fluid">
+        <div ng-include="'views/website/templates/website-list.component.view.client.html'"></div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-right pull-right">
+                <a class="navbar-brand" href="#!/user/{{model.userId}}">
+                    <span class="pull-right glyphicon glyphicon-user"></span>
+                </a>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,62 @@
+<div class="padding-body">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+            </a>
+            <a class="navbar-brand" href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+                Choose Widget
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- Start of body content -->
+<div class="container-fluid">
+    <ul class="no-style-list">
+        <li class="ul-list-item">
+            <a ng-click="model.newHeader()">Header</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Label</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">HTML</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Text Input</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Link</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Button</a>
+        </li>
+        <li class="ul-list-item">
+            <a  ng-click="model.newImage()">Image</a>
+        </li>
+        <li class="ul-list-item">
+            <a  ng-click="model.newYoutube()">Youtube</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Data Table</a>
+        </li>
+        <li class="ul-list-item">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">Repeater</a>
+        </li>
+    </ul>
+
+</div>
+
+<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right pull-right">
+            <a class="navbar-brand" href="#!/user/{{model.userId}}">
+                <span class="pull-right glyphicon glyphicon-user"></span>
+            </a>
+        </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
+</div>

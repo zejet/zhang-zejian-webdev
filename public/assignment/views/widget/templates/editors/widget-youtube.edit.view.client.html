@@ -1,0 +1,38 @@
+<label for="name">Name</label>
+<input name="name"
+       ng-model="model.widget.name"
+       class="form-control"
+       value="Top Heading"
+       id="name">
+
+<label for="text">Text</label>
+<input name="text"
+       ng-model="model.widget.text"
+       value="Economist"
+       class="form-control"
+       id="text">
+
+<label for="url">Url</label>
+<input name="url"
+       ng-model="model.widget.url"
+       class="form-control"
+       id="url">
+
+<label for="size">Size</label>
+<input name="size"
+       id="size"
+       class="form-control"
+       ng-model="model.widget.size">
+</input>
+
+<label for="width">Width</label>
+<input name="width"
+       value="100%"
+       class="form-control"
+       id="width">
+
+<a  class="btn btn-default btn-danger btn-block"
+    ng-click="model.deleteWidget()"
+    role="button">
+    Delete
+</a>

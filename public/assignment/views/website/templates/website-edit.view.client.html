@@ -1,0 +1,111 @@
+<div class="padding-body">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="col-xs-3 visible-lg">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#!/user/{{model.userId}}/website">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+
+                <a class="navbar-brand" href="#">
+                    Websites
+                </a>
+            </div>
+
+            <div class="navbar-header navbar-right pull-right">
+                <a class="navbar-brand navbar-right pull-right visible-lg">
+                    <span class="glyphicon glyphicon-place-holder"></span>
+                </a>
+            </div>
+
+            <div class="navbar-header navbar-right pull-right">
+                <a class="navbar-brand navbar-right pull-right visible-lg" href="#!/user/{{model.userId}}/website/new">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="col-xs-12 col-lg-9">
+            <div class="navbar-header">
+                <a class="navbar-brand hidden-lg" href="#!/user/{{model.userId}}/website">
+                    <span class="glyphicon glyphicon-chevron-left">
+                    </span>
+                </a>
+
+                <a class="navbar-brand" href="#">
+                    Edit Website
+                </a>
+
+                <a class="visible-xs navbar-brand nav-right pull-right" ng-click="model.edit(model.website)">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </a>
+            </div>
+
+            <div class="hidden-xs nav-header collapse navbar-collapse" id="navbar-collapse-1">
+                <a class="nav navbar-brand nav-right pull-right" ng-click="model.edit(model.website)">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-xs-3 visible-lg split-view-left">
+            <ul class="list-group">
+                <li ng-repeat="website in model.websites" class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <a href="#!/user/{{model.userId}}/website/{{website._id}}/page">
+                                {{website.name}}
+                            </a></div>
+                        <div class="col-xs-3">
+                            <a href="#!/user/{{model.userId}}/website/{{website._id}}">
+                                <span class="glyphicon glyphicon-cog pull-right"></span></a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-lg-9 split-view-right">
+
+            <label for="name">Name</label>
+            <input name="name"
+                   ng-model="model.website.name"
+                   value="Wikipedia"
+                   class="form-control"
+                   id="name">
+
+            <label for="description">Description</label>
+            <textarea name="description"
+                      ng-model="model.website.description"
+                      rows="10"
+                      class="form-control"
+                      id="description">Wikipedia is a free online encyclopedia.</textarea>
+            <a  class="btn btn-default btn-danger btn-block"
+                ng-click="model.deleteWebsite()">
+                Delete
+            </a>
+        </div>
+    </div>
+
+</div>
+
+
+<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right pull-right">
+            <a class="navbar-brand" href="#!/user/{{model.userId}}">
+                <span class="pull-right glyphicon glyphicon-user"></span>
+            </a>
+        </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
+</div>
