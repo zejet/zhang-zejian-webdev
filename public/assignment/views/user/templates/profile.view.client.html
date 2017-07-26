@@ -24,6 +24,10 @@
 
     <!-- Start of body content -->
     <div class = "container-fluid">
+        <div ng-show="model.update" class="alert alert-info">
+            {{model.update}}
+        </div>
+
         <label for=username>Username</label>
         <input name="username"
                ng-model=model.user.username
