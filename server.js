@@ -1,16 +1,13 @@
-var app = require('./express');
-var express = app.express;
+ var app = require('./express');
+ 
+ var bodyParser = require('body-parser');
+ app.use(bodyParser.json());
+ app.use(bodyParser.urlencoded({ extended: true }));
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.set('view engine', 'ejs');
-// require("./utilities/filelist");
-
-app.use(express.static(__dirname + '/public'));
-
-// require("./test/app");
-require("./assignment/app");
-
-app.listen(3000);
+ app.use(app.express.static(__dirname + '/public'));
+   
+ var port = process.env.PORT || 3000;
+ // require("./test/app");
+ require("./assignment/app");
+  
+ app.listen(port);
