@@ -13,18 +13,37 @@
         model.modifyPage = modifyPage;
 
         function init() {
-            model.page = pageService.findPageById(model.pageId);
+            pageService.findPageById(model.pageId)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to find page";
+                    } else {
+                        model.page = response.data;
+                    }
+                });
         }
         init();
 
         function modifyPage(page) {
-            pageService.updatePage(model.pageId, page);
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/");
+            pageService.updatePage(model.pageId, page)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to modify page";
+                    } else {
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/");
+                    }
+                });
         }
 
         function deletePage() {
-            pageService.deletePage(model.pageId);
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/");
+            pageService.deletePage(model.pageId)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to delete the page";
+                    } else {
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/");
+                    }
+                });
         }
     }
 })();

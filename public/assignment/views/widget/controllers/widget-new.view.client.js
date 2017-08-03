@@ -19,23 +19,44 @@
 
         function newHeader() {
             var widget = {};
-            widgetService.createWidget(model.pageId, widget);
             widget.widgetType = "HEADING";
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+widget._id);
+            widgetService.createWidget(model.pageId, widget)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to create the widget";
+                    } else {
+                        var newWidget = response.data;
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+newWidget._id);
+                    }
+                });
         }
 
         function newYoutube() {
             var widget = {};
-            widgetService.createWidget(model.pageId, widget);
             widget.widgetType = "YOUTUBE";
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+widget._id);
+            widgetService.createWidget(model.pageId, widget)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to create the widget";
+                    } else {
+                        var newWidget = response.data;
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+newWidget._id);
+                    }
+                })
         }
 
         function newImage() {
             var widget = {};
-            widgetService.createWidget(model.pageId, widget);
             widget.widgetType = "IMAGE";
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+widget._id);
+            widgetService.createWidget(model.pageId, widget)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to create the widget";
+                    } else {
+                        var newWidget = response.data;
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget/"+newWidget._id);
+                    }
+                })
         }
     }
 })();

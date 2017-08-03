@@ -14,24 +14,37 @@
         model.deleteWidget = deleteWidget;
 
         function init() {
-            model.widget = widgetService.findWidgetById(model.widgetId);
-            console.log(model.widget);
+            widgetService.findWidgetById(model.widgetId)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to initialize";
+                    } else {
+                        model.widget = response.data;
+                    }
+                })
         }
         init();
 
 
-        function edit() {
-            if(model.widget.name === "") {
+        function edit(widget) {
+            if(widget.name === "") {
                 model.errorMessage = "Invalid name";
             }
-            widgetService.updateWidget(model.widgetId, model.widget);
-            pageService.updatePage(model.pageId, page);
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget");
+            widgetService.updateWidget(widget._id, widget)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to modify the widget";
+                    } else {
+                        $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget");
+                    }
+                });
         }
 
         function deleteWidget() {
-            widgetService.deleteWidget(model.widgetId);
-            $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget");
+            widgetService.deleteWidget(model.widgetId)
+                .then(function (response) {
+                    $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/"+model.pageId+"/widget");
+                });
         }
     }
 })();

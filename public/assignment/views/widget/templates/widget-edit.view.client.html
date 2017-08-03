@@ -12,7 +12,7 @@
                 </a>
 
                 <a class="visible-xs navbar-brand nav-right pull-right"
-                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                   ng-click="model.edit(model.widget)">
                     <span class="glyphicon glyphicon-ok">
                     </span>
                 </a>
@@ -20,7 +20,7 @@
 
             <div class="hidden-xs nav-header collapse navbar-collapse">
                 <a class="nav navbar-brand nav-right pull-right"
-                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                   ng-click="model.edit(model.widget)">
                     <span class="glyphicon glyphicon-ok">
                     </span>
                 </a>

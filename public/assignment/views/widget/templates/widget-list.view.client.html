@@ -1,58 +1,58 @@
 <div class="padding-body">
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand"
-               href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="navbar-brand"
-               href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
-                Widgets
-            </a>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand"
+                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="navbar-brand"
+                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                    Widgets
+                </a>
 
-            <a class="visible-xs navbar-brand nav-right pull-right"
-               href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+                <a class="visible-xs navbar-brand nav-right pull-right"
+                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
                     <span class="glyphicon glyphicon-plus">
                     </span>
-            </a>
-        </div>
+                </a>
+            </div>
 
-        <div class="hidden-xs nav-header collapse navbar-collapse">
-            <a class="nav navbar-brand nav-right pull-right"
-               href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+            <div class="hidden-xs nav-header collapse navbar-collapse">
+                <a class="nav navbar-brand nav-right pull-right"
+                   href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
                     <span class="glyphicon glyphicon-plus">
                     </span>
-            </a>
+                </a>
+            </div>
+
         </div>
+    </nav>
 
-    </div>
-</nav>
-
-<!-- Start of body content -->
-<div class="container-fluid">
-    <div ng-repeat="widget in model.widgets">
-        <div ng-switch="widget.widgetType">
-            <div ng-switch-when="HEADING">
-                <ng-include src="'views/widget/templates/widget-heading.view.client.html'">
-            </div>
-            <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/templates/widget-image.view.client.html'">
-            </div>
-            <div ng-switch-when="YOUTUBE">
-                <ng-include src="'views/widget/templates/widget-youtube.view.client.html'">
+    <!-- Start of body content -->
+    <div wd-draggable raggable class="container-fluid">
+        <div ng-repeat="widget in model.widgets">
+            <div ng-switch="widget.widgetType">
+                <div ng-switch-when="HEADING">
+                    <ng-include src="'views/widget/templates/widget-heading.view.client.html'">
+                </div>
+                <div ng-switch-when="IMAGE">
+                    <ng-include src="'views/widget/templates/widget-image.view.client.html'">
+                </div>
+                <div ng-switch-when="YOUTUBE">
+                    <ng-include src="'views/widget/templates/widget-youtube.view.client.html'">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="navbar-header navbar-right pull-right">
-            <a class="navbar-brand" href="#!/user/{{model.userId}}">
-                <span class="pull-right glyphicon glyphicon-user"></span>
-            </a>
-        </div><!-- /.navbar-collapse -->
-    </div>
-</nav>
+    <nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-right pull-right">
+                <a class="navbar-brand" href="#!/user/{{model.userId}}">
+                    <span class="pull-right glyphicon glyphicon-user"></span>
+                </a>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
 </div>

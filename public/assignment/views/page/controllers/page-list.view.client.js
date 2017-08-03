@@ -9,7 +9,10 @@
         model.websiteId = $routeParams["wid"];
 
         function init() {
-            model.pages = pageService.findPageByWebsiteId(model.websiteId);
+            pageService.findPageByWebsiteId(model.websiteId)
+                .then(function (response) {
+                model.pages = response.data;
+            });
         }
         init();
     }

@@ -12,20 +12,40 @@
         model.deleteWebsite = deleteWebsite;
 
         function init() {
-            model.websites = WebsiteService.findWebsitesByUser(model.userId);
-            model.website = WebsiteService.findWebsiteById(model.websiteId);
+            WebsiteService.findWebsitesByUser(model.userId)
+                .then(function (response) {
+                    model.websites = response.data;
+                });
+            WebsiteService.findWebsiteById(model.websiteId)
+                .then(function (response) {
+                    model.website = response.data;
+                });
         }
 
         init();
 
         function edit(website) {
-            WebsiteService.updateWebsite(model.websiteId, website);
-            $location.url("user/"+model.userId+"/website");
+            WebsiteService.updateWebsite(model.websiteId, website)
+                .then(function (response) {
+                    var website = response.data;
+                    if(website === '0') {
+                        model.errorMessage = "Failed to edit the website";
+                    } else {
+                        $location.url("user/"+model.userId+"/website");
+                    }
+                })
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(model.websiteId);
-            $location.url("user/"+model.userId+"/website");
+            WebsiteService.deleteWebsite(model.websiteId)
+                .then(function (response) {
+                    if(response.data === "1") {
+                        $location.url("user/"+model.userId+"/website");
+                    } else {
+                        model.errorMessage = "Failed to delete the website";
+                    }
+                })
+
         }
     }
 })();

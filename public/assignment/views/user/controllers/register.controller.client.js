@@ -14,13 +14,19 @@
         init();
 
         function registerUser(user) {
-            var _user = userService.findUserByUsername(user.username);
-            if(!_user) {
-                var user = userService.registerUser(user);
-                $location.url("/user/"+user._id);
-            } else {
-                model.error = "User already exists";
-            }
+            userService.findUserByUsername(user.username)
+                .then(function (response) {
+                    var _user = response.data;
+                    if(_user === "0") {
+                        return userService.registerUser(user)
+                    } else {
+                        model.error = "User already exists";
+                    }
+                })
+                .then(function (response) {
+                    var _user = response.data;
+                    $location.url("/user/"+_user._id);
+                });
         }
     }
 })();

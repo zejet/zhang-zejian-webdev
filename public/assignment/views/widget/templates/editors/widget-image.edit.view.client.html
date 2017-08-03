@@ -29,19 +29,21 @@
 <input name="width"
        value="100%"
        class="form-control"
+       ng-model="model.widget.width"
        id="width">
 
-<label>Upload</label>
-<input name="choosefile"
-       type="file"
-       placeholder="no file chosen"
-       class="form-control"
-       id="choosefile">
-
-<a  class="btn btn-default btn-primary btn-block"
-    <!--href="widget-list.html"-->
-    Upload Image
-</a>
+<div>
+    <label for = "upload">Upload</label>
+    <form action="/api/upload" id = "upload" method="post" enctype="multipart/form-data">
+        <input  name="myFile"    type="file" class="form-control"/>
+        <input  name="width"     value="{{model.widget.width}}" style="display: none"/>
+        <input  name="userId"    value="{{model.userId}}"   style="display: none"/>
+        <input  name="websiteId" value="{{model.websiteId}}"   style="display: none"/>
+        <input  name="pageId"    value="{{model.widget.pageId}}"   style="display: none"/>
+        <input  name="widgetId"  value="{{model.widget._id}}"   style="display: none"/>
+        <button type="submit"    class="btn btn-block btn-primary">Upload Image</button>
+    </form>
+</div>
 
 <a  class="btn btn-default btn-danger btn-block"
     ng-click="model.deleteWidget()"

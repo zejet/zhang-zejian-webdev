@@ -10,17 +10,23 @@
         model.create = create;
 
         function init() {
-            model.websites = WebsiteService.findWebsitesByUser(model.userId);
+            WebsiteService.findWebsitesByUser(model.userId)
+                .then(function (response) {
+                    model.websites = response.data;
+                })
         }
 
         init();
 
-        function create() {
-            var website = [];
-            website.name = model.name;
-            website.description = model.description;
-            WebsiteService.createWebsite(model.userId, website);
-            $location.url("user/"+model.userId+"/website");
+        function create(website) {
+            WebsiteService.createWebsite(model.userId, website)
+                .then(function (response) {
+                    if(response.data === "0") {
+                        model.errorMessage = "Failed to create the website";
+                    } else {
+                        $location.url("user/"+model.userId+"/website");
+                    }
+                })
         }
     }
 })();

@@ -11,23 +11,26 @@
         model.unregister = unregister;
 
         function init() {
-            // var promise = userService.findUserById(userId);
-            // promise.then(function (response) {
-            //     model.user = response.data;
-            // });
-            model.user = userService.findUserById(userId);
+            userService.findUserById(userId)
+                .then(function (response) {
+                    model.user = response.data;
+                });
         }
+
         init();
 
         function updateUser(user) {
-            userService.updateUser(user._id, user);
-            model.update = "Successfully Updated!";
+            userService.updateUser(user._id, user)
+                .then(function (response) {
+                    model.update = "Successfully Updated!";
+                });
         }
 
         function unregister(user) {
-            userService.deleteUser(user._id);
-            model.unregistered = "Successfully Unregistered!";
-            $location.url("/");
+            userService.deleteUser(user._id)
+                .then(function (response) {
+                    $location.url("/");
+                });
         }
     }
 })();
