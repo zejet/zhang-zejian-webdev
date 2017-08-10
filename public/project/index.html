@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="Musiker">
 <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/Header-Nightsky.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+    <script src="services/search.services.client.js"></script>
+    <script src="views/controller/search.controller.client.js"></script>
     <meta charset="UTF-8">
-    <title>Project Home Page</title>
+
+    <!--<script src="services/spotifyApiService.js"></script>-->
+    <!--<script src="views/searchController.js"></script>-->
+    <title>Title</title>
 </head>
+
 <body>
-    <h1>Project Home Page</h1>
+<div ng-view class="container-fluid">
+</div>
 </body>
 </html>

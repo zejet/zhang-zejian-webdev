@@ -1,111 +1,111 @@
-var app = require("../../express");
-var multer = require('multer'); // npm install multer --save
-var upload = multer({ dest: __dirname+'/../../public/uploads' });
-
-var widgets = [
-    { "_id": "123", "name": "gizmodo", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-    { "_id": "234", "name": "lorem", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-    { "_id": "345", "name": "random pic", "widgetType": "IMAGE", "pageId": "321", "width": "100%",
-        "url": "http://lorempixel.com/400/200/"},
-    { "_id": "456", "name": "html1", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-    { "_id": "567", "name": "ipsum", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-    { "_id": "678", "name": "youtube", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-        "url": "https://youtu.be/AM2Ivdi9c4E" },
-    { "_id": "789", "name": "html2", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
-];
+let app = require("../../express");
+let widgetModel = require("../models/widget.model.server");
+let multer = require('multer'); // npm install multer --save
+let upload = multer({ dest: __dirname+'/../../public/uploads' });
 
 // http handlers
 app.post("/api/page/:pageId/widget", createWidget);
 app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
 app.get("/api/widget/:widgetId", findWidgetById);
 app.put("/api/widget/:widgetId", updateWidget);
-app.delete("/api/widget/:widgetId", deleteWidget);
+app.delete("/api/page/:pageId/widget/:widgetId", deleteWidget);
 app.post ("/api/upload", upload.single('myFile'), uploadImage);
 app.put("/page/:pageId/widget", modifyWidgetOrder);
 
 function createWidget(req, res) {
-    var widget = req.body;
-    widget._id = (new Date()).getTime() + "";
-    widgets.push(widget);
-    res.send(widget);
+    let widget = req.body;
+    let pageId = req.params.pageId;
+    widgetModel
+        .createWidget(pageId, widget)
+        .then(function (widgetDoc) {
+            res.json(widgetDoc);
+        }, function (err) {
+            console.log("fail to create widget");
+            res.sendStatus(500).send(err);
+        })
 }
 
 function findAllWidgetsForPage(req, res) {
-    var pageId = req.params.pageId;
-    var widgetsForPage = [];
-    for(var w in widgets) {
-        if(widgets[w].pageId === pageId) {
-            widgetsForPage.push(widgets[w]);
-        }
-    }
-    res.send(widgetsForPage);
+    widgetModel.findAllWidgetsForPage(req.params.pageId)
+        .then(function (widgets) {
+            res.json(widgets);
+            return;
+        }, function (err) {
+            res.sendStatus(404).send(err);
+            return;
+        })
 }
 
 function findWidgetById(req, res) {
-    var widgetId = req.params.widgetId;
-    for(var w in widgets) {
-        if(widgets[w]._id === widgetId) {
-            res.send(widgets[w]);
-        }
-    }
+    widgetModel.findWidgetById(req.params.widgetId)
+        .then(function (widget) {
+            res.json(widget);
+            return;
+        }, function (err) {
+            res.sendStatus(404).send(err);
+            return;
+        })
 }
 
 function updateWidget(req, res) {
-    var widget = req.body;
-    for(var w in widgets) {
-        if(widgets[w]._id === widget._id) {
-            widgets[w] = widget;
-            res.send(widgets[w]);
-        }
-    }
+    let widget = req.body;
+    widgetModel.updateWidget(req.params.widgetId, widget)
+        .then(function (widgetDoc) {
+            res.json(widgetDoc);
+        }, function (err) {
+            res.sendStatus(500).send(err);
+        })
 }
 
 function deleteWidget(req, res) {
-    var widgetId = req.params.widgetId;
-    for(var i = 0; i < widgets.length; i ++) {
-        if(widgets[i]._id === widgetId) {
-            widgets.splice(i, 1);
-            res.send("1");
-        }
-    }
+    let widgetId = req.params.widgetId;
+    let pageId = req.params.pageId;
+    widgetModel.deleteWidget(pageId, widgetId)
+        .then(function (widget) {
+            res.json(widget);
+            return;
+        }, function (err) {
+            res.sendStatus(500).send(err);
+            return;
+        })
 }
 
 function modifyWidgetOrder(req, res) {
-    var index1 = req.query.initial;
-    var index2 = req.query.final;
-    var widget = widgets[index1];
-    widgets.splice(index1, 1);
-    widgets.splice(index2, 0, widget);
-    res.sendStatus(200);
+    let pageId = req.params.pageId;
+    let index1 = req.query.initial;
+    let index2 = req.query.final;
+    widgetModel.reorderWidget(pageId, index1, index2)
+        .then(function (status) {
+            res.sendStatus(200);
+        }, function (err) {
+            res.sendStatus(500).send(err);
+    });
 }
 
 function uploadImage(req, res) {
+    let widgetId      = req.body.widgetId;
+    let width         = req.body.width;
+    let myFile        = req.file;
 
-    var widgetId      = req.body.widgetId;
-    var width         = req.body.width;
-    var myFile        = req.file;
+    let userId = req.body.userId;
+    let websiteId = req.body.websiteId;
+    let pageId = req.body.pageId;
 
-    var userId = req.body.userId;
-    var websiteId = req.body.websiteId;
-    var pageId = req.body.pageId;
+    let originalname  = myFile.originalname; // file name on user's computer
+    let filename      = myFile.filename;     // new file name in upload folder
+    let path          = myFile.path;         // full path of uploaded file
+    let destination   = myFile.destination;  // folder where file is saved to
+    let size          = myFile.size;
+    let mimetype      = myFile.mimetype;
 
-    var originalname  = myFile.originalname; // file name on user's computer
-    var filename      = myFile.filename;     // new file name in upload folder
-    var path          = myFile.path;         // full path of uploaded file
-    var destination   = myFile.destination;  // folder where file is saved to
-    var size          = myFile.size;
-    var mimetype      = myFile.mimetype;
+    let url = '/uploads/'+filename;
 
-    var widget;
-    for (var w in widgets){
-        if (widgets[w]._id === widgetId){
-            widget = widgets[w];
-            break;
-        }
-    }
-    widget.url = '/uploads/'+filename;
-
-    var callbackUrl   = "/assignment/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget";
-
-    res.redirect(callbackUrl);
+    return widgetModel
+        .uploadImage(widgetId, url)
+        .then(function (widgetDoc) {
+            let callbackUrl   = "/assignment/#!/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId;
+            res.redirect(callbackUrl);
+        }, function (err) {
+            res.sendStatus(500).send(err);
+        })
 }

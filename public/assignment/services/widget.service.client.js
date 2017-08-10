@@ -16,7 +16,7 @@
 
         function createWidget(pageId, widget) {
             widget.pageId = pageId;
-            var url = "/api/page/" + pageId + "/widget";
+            let url = "/api/page/" + pageId + "/widget";
             return $http.post(url, widget);
         }
 
@@ -35,8 +35,8 @@
             return $http.put(url, widget);
         }
 
-        function deleteWidget(widgetId) {
-            var url = "/api/widget/" + widgetId;
+        function deleteWidget(pageId, widgetId) {
+            var url = "/api/page/" + pageId + "/widget/" + widgetId;
             return $http.delete(url);
         }
     }

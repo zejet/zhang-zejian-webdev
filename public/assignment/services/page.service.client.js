@@ -36,8 +36,8 @@
             return $http.put(url, page);
         }
 
-        function deletePage(pageId) {
-            var url = "/api/page/" + pageId;
+        function deletePage(websiteId, pageId) {
+            let url = "/api/website/" + websiteId + "/page/" + pageId;
             return $http.delete(url);
         }
     }

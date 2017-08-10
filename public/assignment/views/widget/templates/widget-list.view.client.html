@@ -32,7 +32,13 @@
     <!-- Start of body content -->
     <div wd-draggable raggable class="container-fluid">
         <div ng-repeat="widget in model.widgets">
-            <div ng-switch="widget.widgetType">
+            <div ng-switch="widget.type" class="wd-widget">
+                <div class="widget-toolbar">
+                    <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                        <span class="glyphicon glyphicon-cog"></span>
+                    </a>
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </div>
                 <div ng-switch-when="HEADING">
                     <ng-include src="'views/widget/templates/widget-heading.view.client.html'">
                 </div>
@@ -42,7 +48,12 @@
                 <div ng-switch-when="YOUTUBE">
                     <ng-include src="'views/widget/templates/widget-youtube.view.client.html'">
                 </div>
-            </div>
+                <div ng-switch-when="INPUT">
+                    <ng-include src="'views/widget/templates/widget-text.view.client.html'">
+                </div>
+                <div ng-switch-when="HTML">
+                    <ng-include src="'views/widget/templates/widget-html.view.client.html'">
+                </div>
         </div>
     </div>
 

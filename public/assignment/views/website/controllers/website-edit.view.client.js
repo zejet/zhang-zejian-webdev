@@ -27,7 +27,7 @@
         function edit(website) {
             WebsiteService.updateWebsite(model.websiteId, website)
                 .then(function (response) {
-                    var website = response.data;
+                    let website = response.data;
                     if(website === '0') {
                         model.errorMessage = "Failed to edit the website";
                     } else {
@@ -37,9 +37,9 @@
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(model.websiteId)
+            WebsiteService.deleteWebsite(model.userId, model.websiteId)
                 .then(function (response) {
-                    if(response.data === "1") {
+                    if(response.data != null) {
                         $location.url("user/"+model.userId+"/website");
                     } else {
                         model.errorMessage = "Failed to delete the website";

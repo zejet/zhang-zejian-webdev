@@ -18,13 +18,14 @@
                 .then(function (response) {
                     var _user = response.data;
                     if(_user === "0") {
-                        return userService.registerUser(user)
+                        return userService.registerUser(user);
                     } else {
                         model.error = "User already exists";
                     }
                 })
                 .then(function (response) {
                     var _user = response.data;
+                    console.log(_user);
                     $location.url("/user/"+_user._id);
                 });
         }

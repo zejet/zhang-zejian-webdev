@@ -36,12 +36,12 @@
         }
 
         function deletePage() {
-            pageService.deletePage(model.pageId)
+            pageService.deletePage(model.websiteId, model.pageId)
                 .then(function (response) {
-                    if(response.data === "0") {
-                        model.errorMessage = "Failed to delete the page";
-                    } else {
+                    if(response.data != null) {
                         $location.url("user/"+model.userId+"/website/"+model.websiteId+"/page/");
+                    } else {
+                        model.errorMessage = "Failed to delete the page";
                     }
                 });
         }

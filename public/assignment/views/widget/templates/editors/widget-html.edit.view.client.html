@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <label for="name">Name</label>
+    <input class="form-control"
+           placeholder="Input HTML Name"
+           ng-model="model.widget.name"
+           id="name"/>
+
+    <div ng-model="model.widget.text"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+        ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+        ['indent','outdent'],['html']]">
+    </div>
+    <a  class="btn btn-default btn-danger btn-block"
+        ng-click="model.deleteWidget()"
+        role="button">
+        Delete
+    </a>
+</div>

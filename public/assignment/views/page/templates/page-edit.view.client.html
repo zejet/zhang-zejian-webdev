@@ -5,7 +5,7 @@
             <a class="navbar-brand" href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}">
                 Edit Page
             </a>
 
@@ -16,7 +16,7 @@
         </div>
 
         <div class="hidden-xs nav-header collapse navbar-collapse">
-            <a class="nav navbar-brand nav-right pull-right" ng-click="model.modifyPage(model.page)"">
+            <a class="nav navbar-brand nav-right pull-right" ng-click="model.modifyPage(model.page)">
                     <span class="glyphicon glyphicon-ok">
                     </span>
             </a>

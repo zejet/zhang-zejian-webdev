@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <label>Text</label>
+    <input ng-model="model.widget.text" class="form-control"/>
+    <label>Rows</label>
+    <input ng-model="model.widget.rows" class="form-control" type="number"/>
+    <label>Placeholder</label>
+    <input ng-model="model.widget.placeholder" class="form-control"/>
+    <label>Formatted</label>
+    <input ng-model="model.widget.formatted" type="checkbox"/>
+    <a  class="btn btn-default btn-danger btn-block"
+        ng-click="model.deleteWidget()"
+        role="button">
+        Delete
+    </a>
+</div>
