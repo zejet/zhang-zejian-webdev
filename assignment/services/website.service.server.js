@@ -1,5 +1,5 @@
-let app = require("../../express");
-let websiteModel = require("../models/website.model.server");
+var app = require("../../express");
+var websiteModel = require("../models/website.model.server");
 
 // http handlers
 app.post("/api/user/:userId/website", createWebsite);
@@ -9,8 +9,8 @@ app.put("/api/website/:websiteId", updateWebsite);
 app.delete("/api/user/:userId/website/:websiteId", deleteWebsite);
 
 function createWebsite(req, res) {
-    let website = req.body;
-    let userId = req.params.userId;
+    var website = req.body;
+    var userId = req.params.userId;
     websiteModel
         .createWebsiteForUser(userId, website)
         .then(function (websiteDoc) {
@@ -21,7 +21,7 @@ function createWebsite(req, res) {
 }
 
 function findAllWebsitesForUser(req, res) {
-    let userId = req.params.userId;
+    var userId = req.params.userId;
     websiteModel
         .findAllWebsitesForUser(userId)
         .then(function (websites) {
@@ -40,7 +40,7 @@ function findWebsiteById(req, res) {
 }
 
 function updateWebsite(req, res) {
-    let website = req.body;
+    var website = req.body;
     websiteModel
         .updateWebsite(req.params.websiteId, website)
         .then(function (status) {
@@ -51,8 +51,8 @@ function updateWebsite(req, res) {
 }
 
 function deleteWebsite(req, res) {
-    let websiteId = req.params.websiteId;
-    let userId = req.params.userId;
+    var websiteId = req.params.websiteId;
+    var userId = req.params.userId;
     websiteModel
         .deleteWebsite(userId, websiteId)
         .then(function (status) {

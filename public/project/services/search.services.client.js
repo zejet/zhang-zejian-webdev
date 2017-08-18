@@ -1,7 +1,7 @@
 (function () {
     angular
         .module("Musiker")
-        .factory("searchService", searchService);
+        .service("searchService", searchService);
 
     function searchService($http) {
 
@@ -19,3 +19,20 @@
         }
     }
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

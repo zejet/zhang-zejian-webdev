@@ -1,0 +1,34 @@
+<div ng-include="'views/templates/header.html'"></div>
+
+<div class="user-home container-fluid ">
+    <div class="col-xs-12 col-sm-6">
+        <h2>Users</h2>
+        <li ng-repeat="user in model.allUsers" class="list-group-item">
+            <div class="row">
+                <div>
+                    <label>Username:</label><span></span>
+                    <a href="#!/user/{{user._id}}/edit"
+                       class="user-name">{{user.username}}</a>
+                </div>
+                <div class="song-artist-photo-div">
+                    <img class="song-artist-photo" ng-src="{{user.avatar}}">
+                </div>
+            </div>
+        </li>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h2>Songs</h2>
+        <li ng-repeat="song in model.allSongs" class="list-group-item">
+            <div class="row">
+                <div>
+                    <label>Title:</label><span></span>
+                    <a href=""
+                       class="user-name">{{song.name}}</a>
+                    <label>Musician:</label><span></span>
+                    <a href=""
+                       class="user-name">{{song._creator.username}}</a>
+                </div>
+            </div>
+        </li>
+    </div>
+</div>

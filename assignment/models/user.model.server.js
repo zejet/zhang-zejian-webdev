@@ -11,8 +11,8 @@ userModel.findUserByCredentials = findUserByCredentials;
 userModel.findUserByUsername = findUserByUsername;
 userModel.findAllUsers = findAllUsers;
 userModel.deleteUserById = deleteUserById;
-userModel.addWebsite = addWebsite;
-userModel.removeWebsite = removeWebsite;
+userModel.addSong = addWebsite;
+userModel.removeSong = removeWebsite;
 module.exports = userModel;
 
 function findUserByCredentials(username, password) {
@@ -48,7 +48,7 @@ function removeWebsite(userId, websiteId) {
     return userModel
         .findById(userId)
         .then(function (user) {
-            let index = user.websites.indexOf(websiteId);
+            var index = user.websites.indexOf(websiteId);
             user.websites.splice(index, 1);
             return user.save();
         })

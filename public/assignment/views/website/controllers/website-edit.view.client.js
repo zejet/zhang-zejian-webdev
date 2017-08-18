@@ -27,7 +27,7 @@
         function edit(website) {
             WebsiteService.updateWebsite(model.websiteId, website)
                 .then(function (response) {
-                    let website = response.data;
+                    var website = response.data;
                     if(website === '0') {
                         model.errorMessage = "Failed to edit the website";
                     } else {

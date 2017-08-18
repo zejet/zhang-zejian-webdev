@@ -1,7 +1,7 @@
-let mongoose = require("mongoose");
-let pageSchema = require("./page.schema.server");
-let websiteModel = require("../models/website.model.server");
-let pageModel = mongoose.model("PageModel", pageSchema);
+var mongoose = require("mongoose");
+var pageSchema = require("./page.schema.server");
+var websiteModel = require("../models/website.model.server");
+var pageModel = mongoose.model("PageModel", pageSchema);
 
 pageModel.createPage = createPage;
 pageModel.findAllPagesForWebsite = findAllPagesForWebsite;
@@ -14,7 +14,7 @@ module.exports = pageModel;
 
 function createPage(websiteId, page){
     page._website = websiteId;
-    let pageTemp = null;
+    var pageTemp = null;
     return pageModel
         .create(page)
         .then(function (pageDoc) {
@@ -56,7 +56,7 @@ function removeWidget(pageId, widgetId) {
     return pageModel
         .findById(pageId)
         .then(function (page) {
-            let index = page.widgets.indexOf(widgetId);
+            var index = page.widgets.indexOf(widgetId);
             page.widgets.splice(index, 1);
             return page.save();
         })

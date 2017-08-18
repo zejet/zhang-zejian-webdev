@@ -1,5 +1,4 @@
 (function () {
-
     angular
         .module("WebAppMaker")
         .controller("loginController", loginController);
@@ -21,12 +20,12 @@
             }
             userService.findUserByUsernameAndPassword(user.username, user.password)
                 .then(function (response) {
-                    user = response.data;
-                    if(user === null) {
+                    var userDoc = response.data;
+                    if(userDoc === null) {
                         model.errorMessage = "User not found";
                     } else {
-                        $rootScope.currentUser = user;
-                        $location.url("user/"+user._id);
+                        $rootScope.currentUser = userDoc;
+                        $location.url("user");
                     }
                 });
         }

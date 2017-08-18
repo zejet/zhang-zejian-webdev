@@ -29,7 +29,7 @@ function createWidget(pageId, widget) {
 function findAllWidgetsForPage(pageId) {
     return pageModel.findPageById(pageId)
         .then(function (page) {
-            let widgets = page.widgets;
+            var widgets = page.widgets;
             return widgetModel.find({ _id: { $in: widgets } }).exec(function(err, docs) {
                 docs.sort(function(a, b) {
                     // Sort docs by the order of their index in widgets.

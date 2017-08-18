@@ -1,5 +1,5 @@
-let app = require("../../express");
-let pageModel = require("../models/page.model.server");
+var app = require("../../express");
+var pageModel = require("../models/page.model.server");
 
 // http handlers
 app.post("/api/website/:websiteId/page", createPage);
@@ -9,8 +9,8 @@ app.put("/api/page/:pageId", updatePage);
 app.delete("/api/website/:websiteId/page/:pageId", deletePage);
 
 function createPage(req, res) {
-    let page = req.body;
-    let websiteId = req.params.websiteId;
+    var page = req.body;
+    var websiteId = req.params.websiteId;
     pageModel
         .createPage(websiteId, page)
         .then(function (pageDoc) {
@@ -45,7 +45,7 @@ function findPageById(req, res) {
 }
 
 function updatePage(req, res) {
-    let page = req.body;
+    var page = req.body;
     pageModel.updatePage(req.params.pageId, page)
         .then(function (page) {
             res.json(page);
@@ -57,8 +57,8 @@ function updatePage(req, res) {
 }
 
 function deletePage(req, res) {
-    let websiteId = req.params.websiteId;
-    let pageId = req.params.pageId;
+    var websiteId = req.params.websiteId;
+    var pageId = req.params.pageId;
     pageModel
         .deletePage(websiteId, pageId)
         .then(function (page) {

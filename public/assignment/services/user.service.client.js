@@ -7,11 +7,12 @@
 
         var api = {
             "findUserByUsername": findUserByUsername,
-            "findUserByUsernameAndPassword": findUserByUsernameAndPassword,
+            "findUserByUsernameAndPassword": login,
             "findUserById": findUserById,
             "registerUser": registerUser,
             "updateUser": updateUser,
-            "deleteUser": deleteUser
+            "deleteUser": deleteUser,
+            "checkLogin": checkLogin
         };
         return api;
 
@@ -34,14 +35,22 @@
             return $http.get("/api/user/"+userId);
         }
 
-        function findUserByUsernameAndPassword(username, password) {
-            var url = "/api/user?username="+username+"&password="+password;
+        function login(username, password) {
+            var url = "/api/login";
             // /user?username=alice&password=alice
-            return $http.get(url);
+            return $http.post(url, {username: username, password: password});
         }
 
         function deleteUser(userId) {
             return $http.delete("/api/user/" + userId);
+        }
+
+        function checkLogin() {
+            return $http
+                .get("/api/checkLogin")
+                .then(function (response) {
+                    return response.data;
+                })
         }
     }
 })();

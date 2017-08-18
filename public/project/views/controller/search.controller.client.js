@@ -8,7 +8,7 @@
 
         model.searchTrack = searchTrack;
         model.showDetails = showDetails;
-
+        model.test = "gagagag";
         function searchTrack(song) {
             searchService.searchSong(song)
                 .then(function (response) {

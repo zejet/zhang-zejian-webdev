@@ -1,8 +1,8 @@
-let mongoose = require("mongoose");
-let websiteSchema = require("./website.schema.server");
-let userModel = require("../models/user.model.server");
-let websiteModel = mongoose.model("WebsiteModel", websiteSchema);
-let db = require("./database");
+var mongoose = require("mongoose");
+var websiteSchema = require("./website.schema.server");
+var userModel = require("../models/user.model.server");
+var websiteModel = mongoose.model("WebsiteModel", websiteSchema);
+var db = require("./database");
 
 
 websiteModel.createWebsiteForUser = createWebsiteForUser;
@@ -16,12 +16,12 @@ module.exports = websiteModel;
 
 function createWebsiteForUser(userId, website) {
     website._user = userId;
-    let websiteTmp = null;
+    var websiteTmp = null;
     return websiteModel
         .create(website)
         .then(function (websiteDoc) {
             websiteTmp = websiteDoc;
-            return userModel.addWebsite(userId, websiteTmp._id)
+            return userModel.addSong(userId, websiteTmp._id)
         })
         .then(function (userDoc) {
             return websiteTmp;
@@ -48,7 +48,7 @@ function deleteWebsite(userId, websiteId) {
     return websiteModel
         .remove({_id: websiteId})
         .then(function (status) {
-            return userModel.removeWebsite(userId, websiteId)
+            return userModel.removeSong(userId, websiteId)
         });
 }
 
@@ -65,7 +65,7 @@ function removePage(websiteId, pageId) {
     return websiteModel
         .findById(websiteId)
         .then(function (website) {
-            let index = website.pages.indexOf(pageId);
+            var index = website.pages.indexOf(pageId);
             website.pages.splice(index, 1);
             return website.save();
     })
