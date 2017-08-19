@@ -20,5 +20,5 @@ var userSchema = mongoose.Schema({
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref:"ReviewModel"}],
     transactions: [{type: mongoose.Schema.Types.ObjectId, ref:"TransactionModel"}],
     // isAdmin: Boolean
-}, {collection: "projectusers"});
+}, {collection: "user"});
 module.exports = userSchema;

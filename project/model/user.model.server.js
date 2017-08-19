@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
 var userSchema = require("./user.schema.server");
 var userModel = mongoose.model("ProjectUserModel", userSchema);
+var playlistModel = require('./playlist.model.server');
+var songModel = require("./song.model.server");
 
 userModel.createUser = createUser;
 userModel.findUserById = findUserById;
@@ -25,7 +27,9 @@ userModel.findUserByGoogleId = findUserByGoogleId;
 userModel.updateUserAvatar = updateUserAvatar;
 userModel.removeFollowingUser = removeFollowingUser;
 userModel.removeFollowerUser  = removeFollowerUser;
-userModel.deleteUserFromOthers = deleteUserFromOthers;
+userModel.deleteTransaction = deleteTransaction;
+userModel.createSongForUser = createSongForUser;
+userModel.deleteSong = deleteSong;
 module.exports = userModel;
 
 function findUserByGoogleId(googleId) {
@@ -51,6 +55,8 @@ function updateUserAvatar(userId, avatarUrl) {
 }
 
 function createUser(user) {
+    var promise = playlistModel.findPlaylistById("88888");
+    var promise2 = songModel.findSongById("88888");
     return userModel.create(user);
 }
 
@@ -63,32 +69,24 @@ function findAllUsers() {
 }
 
 function deleteUserById(userId) {
-    return userModel.findOneAndRemove({_id: userId});
-}
-function deleteUserFromOthers(userId) {
-    return userModel
-        .findUserById(userId)
-        .populate('followers')
-        .exec()
+    return userModel.findOneAndRemove({_id: userId})
         .then(function (user) {
-            var followers = user.followers;
-            console.log("user");
-            console.log(user);
-            console.log(followers);
-            for (i = 0; i < followers.length; i++){
-                var follower = followers[i];
-                console.log("follower");
-                console.log(follower);
-                var index = follower.following.indexOf(follower._id);
-                follower.following.splice(index, 1);
-                console.log(follower);
-                follower.save();
-            }
-            user.followers = [];
-            console.log(user);
-            return user.save();
+            user.playlists.forEach(function (playlistId) {
+                playlistModel.deletePlaylist(playlistId);
+            });
+            user.songs.forEach(function (songId) {
+                songModel.deleteSong({_id:songId});
+                playlistModel.removeSongFromAllPlaylists(songId);
+            });
+            user.following.forEach(function (followingId) {
+                userModel.removeFollowerUser(user._id, followingId);
+            });
+            user.followers.forEach(function (followerId) {
+                userModel.removeFollowingUser(followerId, user._id);
+            })
         })
 }
+
 //song
 
 function removeSong(userId, songId) {
@@ -97,7 +95,8 @@ function removeSong(userId, songId) {
         .then(function (user) {
             var index = user.songs.indexOf(songId);
             user.songs.splice(index, 1);
-            return user.save();
+            user.save();
+            return playlistModel.removeSongFromAllPlaylists(songId);
         })
 }
 
@@ -158,16 +157,36 @@ function findFollowingByTypeByUser(userId, usertype){
 function addFollowersByUser(userId, followerId) {
     return userModel.findUserById(userId)
         .then(function (user) {
-            user.followers.push(followerId);
-            return user.save();
+            var flag = '1';
+            for(var u in user.followers) {
+                if(user.followers[u] == followerId) {
+                    flag = '0';
+                    break;
+                }
+            }
+            if(flag === '1') {
+                user.followers.push(followerId);
+                user.save();
+            }
+            return user;
         })
 }
 
 function addFollowingByUser(userId, followingId) {
     return userModel.findUserById(userId)
         .then(function (user) {
-            user.following.push(followingId);
-            return user.save();
+            var flag = '1';
+            for(var u in user.following) {
+                if(user.following[u] == followingId) {
+                    flag = '0';
+                    break;
+                }
+            }
+            if(flag === '1') {
+                user.following.push(followingId);
+                user.save();
+            }
+            return user;
         })
 }
 
@@ -206,18 +225,45 @@ function addPlaylist(userId, playlistId) {
     return userModel
         .findById(userId)
         .then(function (user) {
-            user.playlists.push(playlistId);
-            return user.save();
+            var flag = '0';
+            for(var u in user.playlists) {
+                if(user.playlists[u] == playlistId) {
+                    flag = '1';
+                    break;
+                }
+            }
+            if(flag === '0') {
+                user.playlists.push(playlistId);
+                user.save();
+            }
+            return user;
         })
 }
 
 function removePlaylist(userId, playlistId) {
+    // return playlistModel.findById(playlistId)
+    //     .then(function () {
+    //         console.log("gagag");
+    //     })
     return userModel
         .findById(userId)
         .then(function (user) {
-            var index = user.transactions.indexOf(playlistId);
+            var index = user.playlists.indexOf(playlistId);
             user.playlists.splice(index, 1);
             return user.save();
+        })
+        .then(function (userDoc) {
+            return playlistModel
+                .findById(playlistId);
+        })
+        .then(function (playlist) {
+            playlist.songlist.forEach(function (songId) {
+                return songModel
+                    .removePlaylistFromSong(playlistId, songId)
+            });
+        })
+        .then(function (songDoc) {
+            return playlistModel.deletePlaylist(playlistId);
         })
 }
 
@@ -238,5 +284,41 @@ function removeFollowerUser(userId, followingId) {
             var index = user.followers.indexOf(userId);
             user.followers.splice(index, 1);
             return user.save();
+        })
+}
+
+function deleteTransaction(userId, transactionId) {
+    return userModel.findById(userId)
+        .then(function (user) {
+            var index = user.transactions.indexOf(transactionId);
+            user.transactions.splice(index, 1);
+            return user.save();
+        })
+}
+
+function createSongForUser(userId, song) {
+    song._user = userId;
+    var songTmp = null;
+    return songModel
+        .create(song)
+        .then(function (songDoc) {
+            songTmp = songDoc;
+            return userModel.addSong(userId, songTmp._id)
+        })
+        .then(function (userDoc) {
+            return songTmp;
+        })
+}
+
+function deleteSong(userId, songId) {
+    var songTmp = null;
+    return songModel
+        .remove({_id: songId})
+        .then(function (song) {
+            songTmp = song;
+            return userModel.removeSong(userId, songId);
+        })
+        .then(function (userDoc) {
+            return songTmp;
         })
 }

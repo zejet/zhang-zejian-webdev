@@ -17,9 +17,12 @@
                         <span></span>{{transaction.price}}
                     </div>
                 </div>
-                <div class="transaction-operator-buyer-combination" ng-show="transaction.status === 'PENDING'">
+                <div class="transaction-operator-combination" ng-show="transaction.status === 'PENDING'">
                     <div class="transaction-operator-buyer">
                         <a ng-click="model.cancelTransaction(transaction)"><span class="glyphicon glyphicon-remove"></span></a>
+                    </div>
+                    <div class="transaction-operator-buyer">
+                        <a ng-click="model.deleteTransaction(transaction)"><span class="glyphicon glyphicon-trash"></span></a>
                     </div>
                 </div>
             </div>

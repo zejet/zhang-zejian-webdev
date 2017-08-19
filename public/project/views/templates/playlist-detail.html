@@ -18,6 +18,7 @@
                 <div class="song-artist-photo-div">
                     <img class="song-artist-photo" ng-src="{{song.cover}}">
                 </div>
+                <a ng-click="model.removeSongFromPlaylist(song._id)" href=""><span class="glyphicon glyphicon-remove"></span></a>
             </div>
         </li>
     </ul>

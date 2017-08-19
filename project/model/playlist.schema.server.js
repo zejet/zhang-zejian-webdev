@@ -6,5 +6,5 @@ var playlistSchema = mongoose.Schema({
     description: String,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "ReviewModel"}],
     dateCreated: {type: Date, default: Date.now}
-}, {collection: "playlists"});
+}, {collection: "playlist"});
 module.exports = playlistSchema;

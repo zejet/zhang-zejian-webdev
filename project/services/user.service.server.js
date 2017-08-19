@@ -1,5 +1,6 @@
 var app = require("../../express");
 var userModel = require("../model/user.model.server");
+var playlistModel = require("../model/playlist.model.server");
 var multer = require('multer'); // npm install multer --save
 var upload = multer({dest: __dirname + '/../../public/avatar/upload'});
 var fs = require('fs');
@@ -37,13 +38,15 @@ app.get("/projectapi/user/:userId/follower", findFollowersByUser);
 app.get("/projectapi/users", findAllUsers);
 app.get("/projectapi/checkLogin", checkLogin);
 app.put("/projectapi/user/:userId", updateUser);
+app.put("/projectapi/user/:userId/playlist/:playlistId", addPlaylistToUser);
 app.put("/projectapi/user/:userId/song/:songId", addSong);
 app.put("/projectapi/user/:userId/following/:followingId", addFollowingByUser);
 app.put("/projectapi/user/:userId/follower/:followerId", addFollowerByUser);
 app.put("/projectapi/user/:userId/unfollowuser/:followingId", unFollowUser);
 app.delete("/projectapi/user/:userId", deleteUser);
 app.post("/projectapi/avatar", upload.single('avatar'), uploadAvatar);
-// app.delete("/projectapi/user/song/:songId", removeSong);
+app.delete("/projectapi/user/:userId/playlist/:playlistId", removePlaylist);
+app.delete("/projectapi/user/song/:songId", removeSong);
 
 function findAllUsers(req,res) {
     var publicUsers = [];
@@ -129,25 +132,19 @@ function updateUser(req,res) {
 }
 
 function deleteUser(req,res) {
-    console.log("deleteUser");
     var userId = req.params.userId;
     console.log(userId);
     userModel
-        .deleteUserFromOthers(userId)
+        .deleteUserById(userId)
         .then(function (user) {
-            userModel
-                .deleteUserById(userId)
-                .then(function (user) {
-                    res.send("1");
-                }, function (err) {
-                    res.send("0");
-                });
+            res.json(user)
+        }, function (err) {
+            res.sendStatus(500).send(err);
         })
-
 }
 
 function removeSong(req,res) {
-    var userId = req.query.userId;
+    var userId = req.params.userId;
     var songId = req.params.songId;
     userModel
         .removeSong(userId,songId)
@@ -156,6 +153,30 @@ function removeSong(req,res) {
         }, function (err) {
             res.send("0");
         });
+}
+
+function addPlaylistToUser(req,res) {
+    var userId = req.params.userId;
+    var playlistId = req.params.playlistId;
+    userModel
+        .addPlaylist(userId, playlistId)
+        .then(function (res) {
+            res.json(user)
+        }, function (err) {
+            res.send("0");
+        })
+}
+
+function removePlaylist(req, res) {
+    var userId = req.params.userId;
+    var playlistId = req.params.playlistId;
+    userModel
+        .removePlaylist(userId, playlistId)
+        .then(function (res) {
+            res.json(user)
+        }, function (err) {
+            res.send("0");
+        })
 }
 
 function addSong(req,res) {
@@ -184,7 +205,7 @@ function findFollowingByUser(req, res) {
 function findFollowingByTypeByUser(req,res){
     var userId = req.params.userId;
     var type = req.params.followingtype;
-    console.log(type);
+    // console.log(type);
     userModel
         .findFollowingByTypeByUser(userId,type)
         .then(function (follwings) {

@@ -16,7 +16,6 @@
             // "findReviewBySongId":findReviewByPlaylistId,
             "findAllReviewsByUser": findAllReviewsByUser,
             "findReviewById": findReviewById,
-
             "updateReview": updateReview,
             "deleteReview": deleteReview,
             "isReviewed": isReviewed,
@@ -27,7 +26,8 @@
 
 
         function findReviewById(reviewId) {
-            var url = "/projectapi/review/" + reviewId;
+            var url = "/projectapi/search/review/" + reviewId;
+            console.log(url);
             return $http.get(url);
         }
 

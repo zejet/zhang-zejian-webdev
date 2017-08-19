@@ -1,9 +1,7 @@
 var mongoose = require("mongoose");
 var playlistSchema = require("./playlist.schema.server");
 var playlistModel = mongoose.model("PlaylistModel", playlistSchema);
-var userModel = require("./user.model.server")
-var songModel = require("./song.model.server")
-var db = require("./database");
+var songModel = require("./song.model.server");
 
 playlistModel.createPlaylistForUser = createPlaylistForUser;
 playlistModel.findPlaylistById = findPlaylistById;
@@ -13,11 +11,10 @@ playlistModel.deletePlaylist = deletePlaylist;
 playlistModel.updatePlaylist = updatePlaylist;
 
 playlistModel.addReview = addReview;
-playlistModel.removeReview = removeReview;
-
 playlistModel.addSongToPlaylist = addSongToPlaylist;
 playlistModel.removeSongFromPlaylist = removeSongFromPlaylist;
 playlistModel.getAllSongsFromPlaylist = getAllSongsFromPlaylist;
+playlistModel.removeSongFromAllPlaylists = removeSongFromAllPlaylists;
 
 
 module.exports = playlistModel;
@@ -26,8 +23,8 @@ function createPlaylistForUser(userId, playlist) {
     playlist.owner = userId;
     return playlistModel
         .create(playlist)
-        .then(function (playlistDoc) {
-            return userModel.addPlaylist(userId, playlistDoc._id)
+        .then(function (list) {
+            return list;
         });
 }
 
@@ -49,6 +46,9 @@ function findAllPlaylistsByUserId(userId) {
 function deletePlaylist(playlistId) {
     return playlistModel
         .remove({_id: playlistId})
+        .then(function (playlists) {
+            return playlists;
+        });
 }
 
 function updatePlaylist(playlistId,playlist) {
@@ -86,6 +86,17 @@ function removeSongFromPlaylist(playlistId, songId) {
         })
 }
 
+function removeSongFromAllPlaylists(songId){
+    return playlistModel.find()
+        .then(function (allPlaylists) {
+            allPlaylists
+                .forEach(function (playlist) {
+                    removeSongFromPlaylist(playlist._id, songId);
+                }
+            )
+        })
+}
+
 function getAllSongsFromPlaylist(playlistId) {
     return playlistModel
         .findById(playlistId)
@@ -105,14 +116,4 @@ function addReview(playlistId, reviewId) {
             list.reviews.push(reviewId);
             return list.save();
         });
-}
-
-function removeReview(playlistId, reviewId) {
-    return userModel
-        .findById(playlistId)
-        .then(function (list) {
-            var index = list.reviews.indexOf(reviewId);
-            list.reviews.splice(index, 1);
-            return list.save();
-        })
 }

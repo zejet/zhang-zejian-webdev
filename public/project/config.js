@@ -34,6 +34,14 @@
                     user: checkLogin
                 }
             })
+            .when("/user/:uid", {
+            templateUrl: "views/templates/home.html",
+            controller: "homeController",
+            controllerAs: "model",
+            resolve: {
+                user: checkLogin
+            }
+        })
             .when("/home", {
                 templateUrl: "views/templates/home.html",
                 controller: "homeController",
@@ -46,6 +54,22 @@
                 templateUrl: "views/templates/follow.html",
                 controller: "followController",
                 controllerAs: "model"
+            })
+            .when("/user/:uid/edit", {
+                templateUrl: "views/templates/admin-edit-user.html",
+                controller: "adminEditUserController",
+                controllerAs: "model",
+                resolve: {
+                    user: checkLogin
+                }
+            })
+            .when("/review/:rid/edit", {
+                templateUrl: "views/templates/admin-edit-review.html",
+                controller: "adminEditReviewController",
+                controllerAs: "model",
+                resolve: {
+                    user: checkLogin
+                }
             })
             .when("/song/:songId", {
                 templateUrl: "views/templates/song.html",

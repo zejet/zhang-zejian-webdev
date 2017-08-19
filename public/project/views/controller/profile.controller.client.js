@@ -37,7 +37,7 @@
 
         function unregister(){
             userService.deleteUser(model.userId);
-            $location.url("/login");
+            $location.url("/");
         }
 
         function showPassword() {

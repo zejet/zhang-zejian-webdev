@@ -10,6 +10,7 @@ transactionModel.findTransactionById = findTransactionById;
 transactionModel.findTransactionBySeller = findTransactionBySeller;
 transactionModel.findTransactionsByBuyer = findTransactionsByBuyer;
 transactionModel.updateTransaction = updateTransaction;
+transactionModel.deleteTransaction = deleteTransaction;
 module.exports = transactionModel;
 
 function createTransaction(buyerId, songId, transaction) {
@@ -58,3 +59,14 @@ function updateTransaction(transactionId, transaction){
         {$set: transaction});
 }
 
+function deleteTransaction(transactionId) {
+    var transaction = null;
+    return transactionModel.findOneAndRemove(transactionId)
+        .then(function (transactionDoc) {
+            transaction = transactionDoc;
+            return userModel.deleteTransaction(transaction._buyer, transactionId);
+        })
+        .then(function (userDoc) {
+            return userModel.deleteTransaction(transaction._seller, transactionId);
+        })
+}

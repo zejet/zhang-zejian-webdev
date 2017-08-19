@@ -3,7 +3,7 @@
         .module("Musiker")
         .controller("songController", songController);
 
-    function songController(songService, playlistService,reviewService, transactionService,$routeParams,$location, user) {
+    function songController(songService, playlistService,reviewService,songService, transactionService,$routeParams,$location, user) {
         var model = this;
         model.user = user;
         model.errorPurchaseMessage = '1';
@@ -18,6 +18,7 @@
         model.getPlaylist = getPlaylist;
         model.deleteSong = deleteSong;
         model.addReviewToSong = addReviewToSong;
+        model.deleteReview = deleteReview;
         model.getReview = getReview;
         model.purchaseSong = purchaseSong;
         model.cancelPurchase = cancelPurchase;
@@ -116,7 +117,11 @@
         function addSongToPlaylist() {
             playlistService.addSongToPlaylist(model.playlistId, songId)
                 .then(function (response) {
-                    $location.url('/explore');
+                })
+            songService.addPlaylistToSong(model.playlistId, songId)
+                .then(function (response) {
+                    alert("add to playlist success");
+                    $location.url('/home');
                 })
         }
 
@@ -162,6 +167,20 @@
                 .then(function (response) {
                     console.log(response.data);
                     model.reviews = response.data[0].reviews;
+                })
+        }
+
+        function deleteReview() {
+            reviewService
+                .deleteReview(model.newreview._id)
+                .then(function (res) {
+                    if(res.data === "1"){
+                        alert("delete success");
+                        $location.url('/home');
+                    }else{
+                        alert("delete fail");
+                    }
+
                 })
         }
     }

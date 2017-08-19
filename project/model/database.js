@@ -10,8 +10,8 @@ var connectionString = 'mongodb://127.0.0.1:27017/project'; // for local
 // Replace "@ds157268.mlab.com:57268/heroku_nh37fqq4"
 // above with your own URL given to you by mLab
 
-var mongoose2 = require("mongoose");
+var mongoose = require("mongoose");
 // var instance2 = new Mongoose();
-var db = mongoose2 .connect(connectionString);
-mongoose2.Promise = q.Promise;
+var db = mongoose.connect(connectionString);
+mongoose.Promise = q.Promise;
 module.exports = db;

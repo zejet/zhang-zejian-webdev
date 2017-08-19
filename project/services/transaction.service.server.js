@@ -2,7 +2,7 @@ var app = require("../../express");
 var transactionModel = require("../model/transaction.model.server");
 app.post("/projectapi/transaction/:buyerId/song/:songId", createTransaction);
 
-app.get("projectapi/transaction/:transactionId", findTransactionById);
+app.get("/projectapi/transaction/:transactionId", findTransactionById);
 app.get("/projectapi/transaction/buyer/:buyerId", findTransactionsByBuyer);
 app.get("/projectapi/transaction/seller/:sellerId", findTransactionsBySeller);
 

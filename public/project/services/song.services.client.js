@@ -16,6 +16,7 @@
             "findAllSongs": findAllSongs,
             "getSongCreator":getSongCreator,
             "addSongOwner": addSongOwner,
+            "addPlaylistToSong": addPlaylistToSong,
             "createSongFromApi": createSongFromApi,
             "findSongByIdWithReview": findSongByIdWithReview
         };
@@ -72,6 +73,12 @@
         }
         function addSongOwner(songId, ownerId, price) {
             var url = "/projectapi/song/" + songId + "/owner/" + ownerId + "/price/" + price;
+            console.log(url);
+            return $http.put(url);
+        }
+
+        function addPlaylistToSong(playlistId, songId) {
+            var url = "/projectapi/song/" + songId + "/playlist/" + playlistId;
             console.log(url);
             return $http.put(url);
         }

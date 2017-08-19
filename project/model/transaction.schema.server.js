@@ -7,5 +7,5 @@ var transactionSchema = mongoose.Schema({
     status: {type: String, enum: ['DONE', 'PENDING', 'REJECTED','CANCELED']},
     dateCreated: {type: Date, default: Date.now}
 
-}, {collection: "transactions"});
+}, {collection: "transaction"});
 module.exports = transactionSchema;

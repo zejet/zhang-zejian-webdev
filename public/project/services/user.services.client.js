@@ -21,7 +21,9 @@
             "addFollowersByUser":addFollowersByUser,
             "unFollow": unFollow,
             "findAllUsers": findAllUsers,
-            "checkLogin": checkLogin
+            "checkLogin": checkLogin,
+            "deletePlaylistForUser":deletePlaylistForUser,
+            "addPlaylistToUser":addPlaylistToUser
         };
 
         return api;
@@ -56,11 +58,21 @@
         function deleteUser(userId){
             var url = "/projectapi/user/" + userId;
             return $http.delete(url);
-
         }
 
         function removeSong(userId, songId) {
             var url = "/projectapi/user/" + userId + "/song/" + songId;
+            return $http.delete(url);
+        }
+
+        function addPlaylistToUser(userId, playlistId) {
+            console.log(playlistId);
+            var url = "/projectapi/user/" + userId + "/playlist/" + playlistId;
+            return $http.put(url);
+        }
+
+        function deletePlaylistForUser(userId, playlistId) {
+            var url = "/projectapi/user/" + userId + "/playlist/" + playlistId;
             return $http.delete(url);
         }
 
@@ -102,6 +114,7 @@
             var url = "/projectapi/users";
             return $http.get(url);
         }
+
 
 
         function checkLogin() {

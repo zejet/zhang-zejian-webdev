@@ -4,11 +4,13 @@
         .controller("homeController", homeController);
 
 
-    function homeController(songService,user,$location,userService, reviewService,searchService, playlistService,transactionService) {
+    function homeController(songService,user,$location,userService, $route, reviewService,searchService, playlistService,transactionService) {
         var model = this;
         model.rightPanel = 'musicians';
         model.user = user;
+        model.currentPlaylistId = "";
         model.findMusicians = findMusicians;
+        model.findCritics = findCritics;
         model.findCritics = findCritics;
         model.changeRightPanel = changeRightPanel;
         model.createPlaylistForUser = createPlaylistForUser;
@@ -27,23 +29,42 @@
         model.cancelTransaction = cancelTransaction;
         model.findAllUsers = findAllUsers;
         model.findAllSongs = findAllSongs;
+        model.findAllReviews = findAllReviews;
         model.addSongToLocal = addSongToLocal;
-
+        model.deletePlaylistForUser = deletePlaylistForUser;
+        model.removeSongFromPlaylist = removeSongFromPlaylist;
+        model.deleteSong = deleteSong;
+        model.reviewSong = reviewSong;
+        model.deleteTransaction = deleteTransaction;
+        model.findCritics = findCritics;
         function init() {
-            if(model.user.type === 'MUSICIAN') {
+            if (model.user.type === 'MUSICIAN') {
                 model.rightPanel = 'my-songs';
                 findSongsByMusician();
+                findCritics();
             }
-            if(model.user.type === 'PUBLISHER') {
+            if (model.user.type === 'PUBLISHER') {
                 model.rightPanel = 'transactions';
                 findTransactionsByPublisher();
             }
             findMusicians();
-            findPlaylists();
             findCritics();
-            // findAllUsers();
-            findAllSongs();
+            findPlaylists();
+            if (model.user.type === 'CRITIC') {
+                model.rightPanel = 'my-reviews';
+                findMusicians();
+                findPlaylists();
+                findReviewsByCritic();
+            }
+
+            if (model.user.type === 'ADMIN') {
+                findCritics();
+                findAllUsers();
+                findAllSongs();
+                findAllReviews();
+            }
         }
+
         init();
 
 
@@ -51,6 +72,14 @@
             userService.findFollowingByTypeByUser(user._id, 'MUSICIAN')
                 .then(function (response) {
                     model.followingMusicians = response.data;
+                    // console.log(model.followingMusicians);
+                })
+        }
+
+        function findCritics() {
+            userService.findFollowingByTypeByUser(user._id, 'CRITIC')
+                .then(function (response) {
+                    model.followingCritics = response.data;
                     // console.log(model.followingMusicians);
                 })
         }
@@ -75,7 +104,7 @@
         function unFollow(followingid) {
             userService.unFollow(user._id, followingid)
                 .then(function (response) {
-                    if(response){
+                    if (response) {
                         findMusicians();
                         findCritics();
                     }
@@ -111,14 +140,21 @@
         function createPlaylistForUser(playlist) {
             playlistService.createPlaylistForUser(model.user._id, playlist)
                 .then(function (response) {
-                    model.playlists = response.data;
-                    // console.log(model.playlists);
-                    model.rightPanel = 'search';
-                    $location.url('#!/home');
+                    var newPlaylistId = response.data._id;
+                    console.log(response);
+                    userService.addPlaylistToUser(model.user._id, newPlaylistId)
+                        .then(function (response) {
+                            console.log("hahahah");
+                            init();
+                        });
                 })
+
+            $route.reload();
+
         }
 
         function getAllSongsFromPlaylist(playlistId) {
+            model.currentPlaylistId = playlistId;
             playlistService.getAllSongsFromPlaylist(playlistId)
                 .then(function (response) {
                     model.songs = response.data;
@@ -198,15 +234,23 @@
                 })
         }
 
+        function deleteTransaction(transaction) {
+            transactionService.deleteTransaction(transaction._id)
+                .then(function (response) {
+                    $route.reload();
+                })
+        }
+
         function addSongToLocal(song) {
-            var newSong= {
+            var newSong = {
                 "name": song.name,
-                "artist" : song.artists[0].name,
-                "cover" : song.album.cover,
-                "thridPartyId": ""+song.id,
-                "_owner" : model.user._id,
-                "url" : "http://music.163.com/#/song?id="+song.id
+                "artist": song.artists[0].name,
+                "cover": song.album.cover,
+                "thridPartyId": "" + song.id,
+                "_owner": model.user._id,
+                "url": "http://music.163.com/#/song?id=" + song.id
             };
+            alert("successfully added to local database!")
             return songService.createSongFromApi(newSong)
                 .then(function (response) {
                     return response.data;
@@ -217,7 +261,6 @@
             userService.findAllUsers()
                 .then(function (response) {
                     model.allUsers = response.data;
-                    console.log(response);
                 })
         }
 
@@ -225,9 +268,53 @@
             songService.findAllSongs()
                 .then(function (response) {
                     model.allSongs = response.data;
-                    console.log(response);
                 })
         }
 
+        function findAllReviews() {
+            reviewService.findAllReviews()
+                .then(function (response) {
+                    model.allReviews = response.data;
+                })
+        }
+
+        function removeSongFromPlaylist(songId) {
+            playlistService
+                .removeSongFromPlaylist(model.currentPlaylistId, songId)
+                .then(function (res) {
+                    if (res.data !== "0") {
+                        getAllSongsFromPlaylist(model.currentPlaylistId);
+                    }
+
+                })
+        }
+
+        function deletePlaylistForUser(playlistId) {
+            userService
+                .deletePlaylistForUser(user._id, playlistId)
+                .then(function (status) {
+                }, function (err) {
+                });
+            $route.reload();
+        }
+
+        function deleteSong(songId){
+            userService
+                .removeSong(user._id, songId)
+                .then(function (res) {
+                    if (res.data !== "0")
+                        findSongsByMusician();
+                })
+        }
+
+        function  reviewSong(reviewId) {
+            reviewService
+                .findReviewById(reviewId)
+                .then(function (res) {
+                    model.newreview = res.data;
+                })
+            model.rightPanel = 'edit-review';
+        }
     }
+
 })();

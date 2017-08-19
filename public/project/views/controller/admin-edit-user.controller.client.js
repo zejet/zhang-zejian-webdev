@@ -19,7 +19,8 @@
         function init() {
             userService.findUserById(model.userId)
                 .then(function (response) {
-                    model.user = response.data;
+                    model.editUser = response.data;
+                    console.log(model.editUser);
                 });
         }
         init();
@@ -28,17 +29,13 @@
         function updateUser(user){
             userService.updateUser(model.userId, user)
                 .then(function (response) {
-                    // model.user = response.data;
-                    // model.user = cloneObj(_user);
-                    // if(model.user != "0"){
                     alert("update scceuss")
-                    // }
                 });
         }
 
         function unregister(){
             userService.deleteUser(model.userId);
-            $location.url("/login");
+            $location.url("/home");
         }
 
         function showPassword() {

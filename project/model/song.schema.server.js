@@ -7,7 +7,7 @@ var songSchema = mongoose.Schema({
     artist: String,
     cover: String,
     thridPartyId: String,
-    playlists: {type: mongoose.Schema.Types.ObjectId, ref: "PlaylistModel"},
+    playlists: [{type: mongoose.Schema.Types.ObjectId, ref: "PlaylistModel"}],
     coverUrl: String,
     description: String,
     reviews: [{type: mongoose.Schema.Types.ObjectId, ref: "ReviewModel"}],

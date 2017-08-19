@@ -10,5 +10,5 @@ var reviewSchema = mongoose.Schema({
     rating: Number,
     dateCreated: {type: Date, default: Date.now}
 
-}, {collection: "reviews"});
+}, {collection: "review"});
 module.exports = reviewSchema;

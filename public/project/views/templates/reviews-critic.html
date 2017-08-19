@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h2>Songs</h2>
+    <h2>My Reviews</h2>
     <div class="musician-detail-conntent-div">
         <ul  class="list-group list-div active">
             <li ng-repeat="review in model.reviews" class="list-group-item col-xs-12 col-sm-6">
@@ -21,6 +21,7 @@
                             <h2>Rating:</h2>
                             <h3 class="reivew-content">{{review.rating}}</h3>
                         </div>
+                        <a class="detail-operator" href="#!/song/{{review._song._id}}"><span class="glyphicon glyphicon-pencil"></span></a>
 
 
                     </div>
