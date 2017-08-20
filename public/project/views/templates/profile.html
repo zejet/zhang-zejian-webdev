@@ -21,6 +21,10 @@
         </div>
     </div>
 </nav>
+<div class="alert " ng-show="model.errorMessage !== '1'">
+    <span class="closebtn" ng-click="model.defaultMessage()">&times;</span>
+    {{model.errorMessage}}
+</div>
 <div class="user-detail-div container-fluid">
     <div class="user-detail-header-div">
         <div class="user-detail-header-img-div">
@@ -69,9 +73,10 @@
        ng-click="model.showPassword()">Show Password</a>
     <a class="btn btn-primary btn-block"
        role="button"
-       ng-click="model.updateUser(model.user)">Update Profile</a>
+       ng-click="model.updateUser(model.user, model.user.username, model.user.password,model.user.firstName
+        , model.user.lastName)">Update Profile</a>
     <a class="btn btn-danger btn-block"
        role="button"
        ng-click="model.unregister()">Unregister</a>
-    <a class="btn btn-danger btn-block" href="#!/" role="button">Log Out</a>
+    <a class="btn btn-danger btn-block" ng-click="model.logout()" role="button">Log Out</a>
 </div>

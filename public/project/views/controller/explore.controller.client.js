@@ -3,12 +3,13 @@
         .module("Musiker")
         .controller("exploreController", exploreController)
 
-    function exploreController(user, songService, playlistService, reviewService,$location) {
+    function exploreController(user, songService, playlistService, reviewService,$location, userService) {
         var model = this;
         model.user = user;
         model.getAllSongs = getAllSongs;
         model.getAllReviews = getAllReviews;
         model.getPlaylist = getPlaylist;
+        model.logout = logout;
 
         function init() {
             getAllSongs();
@@ -65,10 +66,15 @@
                     // console.log(model.playlists);
                 });
         }
-        //
-        // function dislike() {
-        //     model.favourite = "dontlike";
-        // }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
+        }
     }
 
 

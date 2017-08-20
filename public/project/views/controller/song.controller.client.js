@@ -3,10 +3,12 @@
         .module("Musiker")
         .controller("songController", songController);
 
-    function songController(songService, playlistService,reviewService,songService, transactionService,$routeParams,$location, user) {
+    function songController(songService, playlistService,reviewService,songService,userService, transactionService,$routeParams,$location, user) {
         var model = this;
         model.user = user;
         model.errorPurchaseMessage = '1';
+        model.errorReviewMessage = '1';
+        model.errorFavouriteMessage = '1';
         model.findSongInfo = findSongInfo;
         model.addSong = addSong;
         model.reviewSong = reviewSong;
@@ -24,6 +26,7 @@
         model.cancelPurchase = cancelPurchase;
         model.defaultMessage = defaultMessage;
         model.findSongReviews = findSongReviews;
+        model.logout = logout;
         var songId = $routeParams["songId"];
         var hasreviewed = false;
         model.favourite = "no";
@@ -65,8 +68,21 @@
             model.editreview = 'yes';
         }
 
-        function addReviewToSong(){
-            if(model.newreview.title && model.newreview.comment){
+        function addReviewToSong(title, comment, rating){
+            if (title === null || title === '' || typeof title === 'undefined'){
+                model.errorReviewMessage = "title is required";
+                return;
+            }
+            else if (comment === null || comment === '' || typeof comment === 'undefined'){
+                model.errorReviewMessage = "review is required";
+                return;
+            }
+            else if (rating === null || rating === '' || typeof rating === 'undefined'){
+                model.errorReviewMessage = "rating required";
+                return;
+            }
+            else if(model.newreview.title && model.newreview.comment){
+                model.errorReviewMessage = '1';
                 if(hasreviewed === true){
                     reviewService.updateReview(model.newreview._id, model.newreview)
                         .then(function (res) {
@@ -81,13 +97,14 @@
                         $location.url('/explore');
                     })
                 }
-            }else{
-                alert("please fill in review");
             }
         }
 
         function defaultMessage() {
             model.errorPurchaseMessage = '1';
+            model.errorReviewMessage = '1';
+            model.errorFavouriteMessage = '1';
+
         }
 
         function purchaseSong(price) {
@@ -114,15 +131,23 @@
             model.buy = "no";
         }
 
-        function addSongToPlaylist() {
-            playlistService.addSongToPlaylist(model.playlistId, songId)
-                .then(function (response) {
-                })
-            songService.addPlaylistToSong(model.playlistId, songId)
-                .then(function (response) {
-                    alert("add to playlist success");
-                    $location.url('/home');
-                })
+        function addSongToPlaylist(playlist) {
+            if (playlist === null || playlist === '' || typeof playlist === 'undefined'){
+                model.errorFavouriteMessage = "please select playlist";
+                return;
+            }
+            else{
+                model.errorFavouriteMessage = '1';
+                playlistService.addSongToPlaylist(model.playlistId, songId)
+                    .then(function (response) {
+                    })
+                songService.addPlaylistToSong(model.playlistId, songId)
+                    .then(function (response) {
+                        alert("add to playlist success");
+                        $location.url('/home');
+                    })
+            }
+
         }
 
         function favouriteSong(option) {
@@ -182,6 +207,15 @@
                     }
 
                 })
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
         }
     }
 })();

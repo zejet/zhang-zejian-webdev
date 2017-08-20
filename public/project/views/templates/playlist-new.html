@@ -1,6 +1,9 @@
 
 <div class="container-fluid newPlaylist">
-
+    <div class="alert " ng-show="model.errorMessage !== '1'">
+        <span class="closebtn" ng-click="model.defaultMessage()">&times;</span>
+        {{model.errorMessage}}
+    </div>
     <label for="name">Name</label>
     <input name="name"
            placeholder="Name"
@@ -17,7 +20,7 @@
               class="form-control"
               id="description"></textarea>
 
-    <a ng-click="model.createPlaylistForUser(model.playlist)"
+    <a ng-click="model.createPlaylistForUser(model.playlist, model.playlist.name, model.playlist.description)"
        class="btn btn-default btn-success btn-block">Create</a>
     <!--<a href="#!/home" class="btn btn-danger black-btn btn-block">Cancel</a>-->
 

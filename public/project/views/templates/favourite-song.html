@@ -1,4 +1,8 @@
 <form class="form-titled form-horizontal">
+    <div class="alert " ng-show="model.errorFavouriteMessage !== '1'">
+        <span class="closebtn" ng-click="model.defaultMessage()">&times;</span>
+        {{model.errorFavouriteMessage}}
+    </div>
     <h5>Song Name</h5>
     <input type="text"
            class="form-control input-block"
@@ -23,7 +27,7 @@
     </select>
     <a class="btn btn-primary btn-block"
        role="button"
-       ng-click="model.addSongToPlaylist()">Confirm</a>
+       ng-click="model.addSongToPlaylist(model.playlistId)">Confirm</a>
     <a class="btn btn-success btn-block"
        role="button"
        ng-click="model.favouriteSong('no')">Cancel</a>

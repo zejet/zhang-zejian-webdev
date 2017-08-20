@@ -2,6 +2,10 @@
 <div class="container-fluid full-height adim-edit-review">
     <form class="form-titled form-horizontal">
         <h2>Review Title</h2>
+        <div class="alert " ng-show="model.errorReviewMessage !== '1'">
+            <span class="closebtn" ng-click="model.defaultMessage()">&times;</span>
+            {{model.errorReviewMessage}}
+        </div>
         <input type="text"
                class="form-control input-block"
                placeholder="Title"
@@ -17,7 +21,8 @@
                class="form-control input-block"
                placeholder="Rating"
                ng-model="model.editReview.rating">
-        <a class="btn-primary btn btn-block" ng-click="model.updateReview(model.editReview)">Update</a>
+        <a class="btn-primary btn btn-block" ng-click="model.updateReview(model.editReview,model.editReview.title
+         ,model.editReview.comment, model.editReview.rating)">Update</a>
         <a class="btn-danger btn btn-block"  ng-click="model.deleteReview()">Delete</a>
         <a class="btn-warning btn btn-block" href="#!/home">Cancel</a>
     </form>

@@ -35,13 +35,13 @@
                 }
             })
             .when("/user/:uid", {
-            templateUrl: "views/templates/home.html",
-            controller: "homeController",
-            controllerAs: "model",
-            resolve: {
-                user: checkLogin
-            }
-        })
+                templateUrl: "views/templates/home.html",
+                controller: "homeController",
+                controllerAs: "model",
+                resolve: {
+                    user: checkLogin
+                }
+            })
             .when("/home", {
                 templateUrl: "views/templates/home.html",
                 controller: "homeController",

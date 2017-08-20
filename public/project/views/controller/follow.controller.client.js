@@ -12,6 +12,7 @@
         //declare function
         model.searchUser = searchUser;
         model.followUser = followUser;
+        model.logout = logout;
         //initial function
         function init() {
             userService.findFollowersByUser(model.userId)
@@ -47,6 +48,15 @@
                     alert("follow success");
                     init();
                 })
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
         }
 
     }

@@ -3,13 +3,14 @@
         .module("Musiker")
         .controller("musicianVisitController", musicianVisitController);
 
-    function musicianVisitController(userService, songService, $routeParams, user) {
+    function musicianVisitController(userService, songService, $routeParams, user, $location) {
         var model = this;
         model.user = user;
         var musicianId = $routeParams["musicianId"];
         model.findMusicianInfo = findMusicianInfo;
         model.findMusicianSongs = findMusicianSongs;
         model.followMusician = followMusician;
+        model.logout = logout;
         function init() {
             findMusicianSongs();
             findMusicianInfo();
@@ -44,6 +45,15 @@
             else{
                 alert("cannot follow yourself");
             }
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
         }
     }
 })();

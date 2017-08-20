@@ -7,6 +7,10 @@
     </div>
 </div>
 <div class="container full-height">
+    <div class="alert " ng-show="model.errorMessage !== '1'">
+        <span class="closebtn" ng-click="model.defaultMessage()">&times;</span>
+        {{model.errorMessage}}
+    </div>
     <form class="form-titled form-horizontal">
         <h5>Username</h5>
         <input type="text"
@@ -47,7 +51,8 @@
        ng-click="model.showPassword()">Show Password</a>
     <a class="btn btn-primary btn-block"
        role="button"
-       ng-click="model.updateUser(model.editUser)">Update User</a>
+       ng-click="model.updateUser(model.editUser, model.editUser.username, model.editUser.password,
+       model.editUser.firstName, model.editUser.lastName)">Update User</a>
     <a class="btn btn-danger btn-block"
        role="button"
        ng-click="model.unregister()">Delete User</a>

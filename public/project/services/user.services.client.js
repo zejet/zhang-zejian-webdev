@@ -16,6 +16,7 @@
             "addSong":addSong,
             "findFollowingByUser":findFollowingByUser,
             "findFollowingByTypeByUser":findFollowingByTypeByUser,
+            "logout": logout,
             "findFollowersByUser":findFollowersByUser,
             "addFollowingByUser":addFollowingByUser,
             "addFollowersByUser":addFollowersByUser,
@@ -58,6 +59,10 @@
         function deleteUser(userId){
             var url = "/projectapi/user/" + userId;
             return $http.delete(url);
+        }
+
+        function logout(user) {
+            return $http.post("/projectapi/logout");
         }
 
         function removeSong(userId, songId) {

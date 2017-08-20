@@ -343,6 +343,7 @@ label.musician-detail-label {
     font-size: 20px !important;
     color: mediumaquamarine !important;
     display:inline-block;
+    word-break: break-all;
 }
 
 .transaction-operator-combination {
@@ -413,5 +414,15 @@ a.api-song-name:hover {
 
 .footer-explore{
     height: 10px;
+}
+
+#edit-review-container{
+    padding-bottom: 40px;
+}
+
+#explore-back{
+    position: fixed;
+    top: 80px;
+    left: 5px;
 }
 

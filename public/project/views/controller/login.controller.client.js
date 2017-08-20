@@ -49,20 +49,27 @@
             model.errorMessage = '1';
         }
 
-        function register(user) {
-            if (user.password === user.secondPassword && user.type != null) {
+        function register(user, username) {
+            if (username === null || username === '' || typeof username === 'undefined'){
+                model.errorRegisterMessage = "username is required";
+                return;
+            }
+            else if (user.password === null || user.password === '' || typeof user.password === 'undefined'){
+                model.errorRegisterMessage = "password is required";
+                return;
+            }
+            else if (user.password === user.secondPassword && user.type != null) {
                 userService.findUserByUsername(user.username)
                     .then(function (response) {
                         if (!response.data || response.data === "0") {
                             return userService.createUser(user);
                         } else {
                             model.errorRegisterMessage = "username already exist";
-                            return "exist";
                         }
                     })
                     .then(function(response){
+                        console.log(response.data);
                         if(response && response !== "exist") {
-                            user = response.data;
                             login(user);
                         }
                         else if(response !== "exist"){

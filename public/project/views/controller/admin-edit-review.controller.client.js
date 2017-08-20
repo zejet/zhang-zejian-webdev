@@ -3,14 +3,17 @@
         .module("Musiker")
         .controller("adminEditReviewController", adminEditReviewController);
 
-    function adminEditReviewController($routeParams, $location, reviewService,user) {
+    function adminEditReviewController($routeParams, $location, reviewService,user, userService) {
         var model = this;
         //variable from path
         model.adminId = user._id;
         model.reviewId = $routeParams["rid"];
+        model.errorReviewMessage = '1';
         //declare function
         model.updateReview = updateReview;
         model.deleteReview = deleteReview;
+        model.defaultMessage = defaultMessage;
+        model.logout = logout;
 
         //initial function
         function init() {
@@ -41,12 +44,43 @@
         // function initReview() {
         //
         // }
-        function updateReview(review){
-            reviewService.updateReview(model.reviewId, review)
-                .then(function (response) {
-                    alert("update scceuss")
-                    $location.url("/home");
-                });
+
+        function defaultMessage() {
+            model.errorReviewMessage = '1';
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
+        }
+
+        function updateReview(review, title, comment, rating){
+            if (title === null || title === '' || typeof title === 'undefined'){
+                model.errorReviewMessage = "title is required";
+                return;
+            }
+            else if (comment === null || comment === '' || typeof comment === 'undefined'){
+                model.errorReviewMessage = "review is required";
+                return;
+            }
+            else if (rating === null || rating === '' || typeof rating === 'undefined'){
+                model.errorReviewMessage = "rating required";
+                return;
+            }
+            else{
+                model.errorReviewMessage = '1';
+                reviewService.updateReview(model.reviewId, review)
+                    .then(function (response) {
+                        alert("update scceuss");
+                        $location.url("/home");
+                        return;
+                    });
+            }
+
         }
 
         function deleteReview(){

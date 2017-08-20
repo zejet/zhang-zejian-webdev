@@ -9,6 +9,8 @@
         model.rightPanel = 'musicians';
         model.user = user;
         model.currentPlaylistId = "";
+        model.errorMessage = '1';
+        model.logout = logout;
         model.findMusicians = findMusicians;
         model.findCritics = findCritics;
         model.findCritics = findCritics;
@@ -37,6 +39,7 @@
         model.reviewSong = reviewSong;
         model.deleteTransaction = deleteTransaction;
         model.findCritics = findCritics;
+        model.defaultMessage = defaultMessage;
         function init() {
             if (model.user.type === 'MUSICIAN') {
                 model.rightPanel = 'my-songs';
@@ -67,6 +70,18 @@
 
         init();
 
+        function defaultMessage() {
+            model.errorMessage = '1';
+        }
+
+        function logout() {
+            userService
+                .logout()
+                .then(
+                    function(response) {
+                        $location.url("/");
+                    });
+        }
 
         function findMusicians() {
             userService.findFollowingByTypeByUser(user._id, 'MUSICIAN')
@@ -137,8 +152,18 @@
             model.song = song;
         }
 
-        function createPlaylistForUser(playlist) {
-            playlistService.createPlaylistForUser(model.user._id, playlist)
+        function createPlaylistForUser(playlist, name ,description) {
+            if (name === null || name === '' || typeof name === 'undefined'){
+                model.errorMessage = "playlist name is required";
+                return;
+            }
+            else if (description === null || description === '' || typeof description === 'undefined'){
+                model.errorMessage = "description is required";
+                return;
+            }
+            else{
+                model.errorMessage = '1';
+                playlistService.createPlaylistForUser(model.user._id, playlist)
                 .then(function (response) {
                     var newPlaylistId = response.data._id;
                     console.log(response);
@@ -148,6 +173,7 @@
                             init();
                         });
                 })
+            }
 
             $route.reload();
 

@@ -1,6 +1,7 @@
 var app = require("../../express");
 var userModel = require("../model/user.model.server");
 var playlistModel = require("../model/playlist.model.server");
+var bcrypt = require("bcrypt-nodejs");
 var multer = require('multer'); // npm install multer --save
 var upload = multer({dest: __dirname + '/../../public/avatar/upload'});
 var fs = require('fs');
@@ -28,6 +29,7 @@ app.get('/auth/google/callback',
 
 app.post("/projectapi/user", createUser);
 app.post("/projectapi/login", passport.authenticate('local'), login);
+app.post("/projectapi/logout", logout);
 app.get("/projectapi/user", findUser);
 app.get("/projectapi/user/:userId", findUserById);
 app.get("/projectapi/user/:userId/following", findFollowingByUser);
@@ -84,11 +86,17 @@ function uploadAvatar(req, res) {
 
 function createUser(req,res) {
     var user = req.body;
+    user.password = bcrypt.hashSync(user.password);
     userModel
         .createUser(user)
         .then(function (user) {
             res.json(user);
         });
+}
+
+function logout(req, res) {
+    req.logOut();
+    res.send(200);
 }
 
 function findUserById(req,res) {
@@ -275,13 +283,13 @@ function login(req, res) {
 
 function localStrategy(username, password, done) {
         userModel
-            .findUserByCredentials(username, password)
+            .findOne({"username":username})
             .then(
                     function(user) {
-                            if (!user) {
-                                    return done(null, false);
+                            if (user && bcrypt.compareSync(password, user.password)) {
+                                return done(null, user);
                                 }
-                            return done(null, user);
+                            return done(null, false);
                         },
                     function(err) {
                             if (err) {
